@@ -11,18 +11,18 @@ package model;
  */
 public class ThompsonConstructor {
     public static DoubleNode nullConstruction () {
-        DoubleNode former = new DoubleNode();
+        DoubleNode first = new DoubleNode();
         DoubleNode last = new DoubleNode();
-        former.link1 = last;
-        return former;
+        first.link1 = last;
+        return first;
     }
     
     public static DoubleNode simpleConstruction (String simbol) {
-        DoubleNode former = new DoubleNode();
+        DoubleNode first = new DoubleNode();
         DoubleNode last = new DoubleNode();
-        former.link1 = last;
-        former.transition1 = simbol;
-        return former;
+        first.link1 = last;
+        first.transition1 = simbol;
+        return first;
     }
     
     public static DoubleNode[] concatConstruction (String simbol1, String simbol2) {
@@ -40,9 +40,9 @@ public class ThompsonConstructor {
         DoubleNode consSimbol1 = simpleConstruction(simbol1);
         DoubleNode consSimbol2 = simpleConstruction(simbol2);
         DoubleNode first = new DoubleNode();
+        DoubleNode last = new DoubleNode();
         first.link1 = consSimbol1;
         first.link2 = consSimbol2;
-        DoubleNode last = new DoubleNode();
         consSimbol1.link1.link1 = last;
         consSimbol2.link1.link1 = last;
         vector[0] = first;
@@ -66,4 +66,32 @@ public class ThompsonConstructor {
         vector[1] = last;
         return vector;
     }
+    
+    public static DoubleNode[] asteriskConstruction (String simbol){
+        DoubleNode[] vector = new DoubleNode[2];
+        DoubleNode consSimbol1 = simpleConstruction(simbol);
+        consSimbol1.link1.link1 = consSimbol1;
+        DoubleNode start = new DoubleNode();
+        start.link1 = consSimbol1;
+        DoubleNode end = new DoubleNode();
+        start.link2 = end;
+        consSimbol1.link1.link2 = end;
+        vector[0] = start;
+        vector[1] = end;
+        return vector;
+    }
+    
+    public static DoubleNode[] plusConstruction (String simbol){
+        DoubleNode[] vector = new DoubleNode[2];
+        DoubleNode consSimbol1 = simpleConstruction(simbol);
+        consSimbol1.link1.link1 = consSimbol1;
+        DoubleNode start = new DoubleNode();
+        start.link1 = consSimbol1;
+        DoubleNode end = new DoubleNode();
+        consSimbol1.link1.link2 = end;
+        vector[0] = start;
+        vector[1] = end;
+        return vector;
+    }
+    
 }
