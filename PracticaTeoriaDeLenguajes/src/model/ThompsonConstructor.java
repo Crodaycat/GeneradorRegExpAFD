@@ -10,6 +10,7 @@ package model;
  * @author mac
  */
 public class ThompsonConstructor {
+    
     public static DoubleNode nullConstruction () {
         DoubleNode first = new DoubleNode();
         DoubleNode last = new DoubleNode();
