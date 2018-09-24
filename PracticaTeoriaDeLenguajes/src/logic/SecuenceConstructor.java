@@ -46,9 +46,8 @@ public class SecuenceConstructor
         {
             case "(":
                 int inicio = contador-1;
-                contador = searchForParenthesisClose (contador);  // Busca su respectivo cierre paréntesis y devuelve la posición.
+                contador = searchForParenthesisClose (contador); // Busca su respectivo cierre paréntesis y devuelve la posición.
                 String sec1 = secuence.substring(inicio, contador);
-                System.out.println(sec1);
                 aux = secuence.substring(contador, contador + 1);
                 contador++;
                 if (aux.equals("*") || aux.equals("+"))
