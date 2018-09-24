@@ -5,7 +5,10 @@
  */
 package practicateoriadelenguajes;
 
+import java.util.LinkedList;
+import java.util.List;
 import logic.SecuenceConstructor;
+import model.DoubleNode;
 
 /**
  *
@@ -155,7 +158,19 @@ public class Principal extends javax.swing.JFrame {
         //</editor-fold>
 
         SecuenceConstructor c = new SecuenceConstructor("(0|1.0*.1)*.0*"); // (0|1.0*.1)*.0* = (0+10*1)*0*
-        c.CreateThompson();
+        DoubleNode start = c.CreateThompson();
+        List<DoubleNode> visited = new LinkedList<DoubleNode>();
+        
+        if (SecuenceConstructor.isSimplifiable(start, null))
+        {
+            SecuenceConstructor.expandTransitions(start, null);
+        }
+            
+        
+        int num = 1;
+        SecuenceConstructor.goOverAutomaton(start, visited, num);
+        
+        
         /* Create and display the form */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -26,6 +26,12 @@ public class ThompsonConstructor {
         return first;
     }
     
+    public static void simpleConstruction (String simbol, DoubleNode start, DoubleNode end) {
+        start.link1 = end;
+        start.transition1 = "";
+        start.transition1 = simbol;
+    }
+    
     public static DoubleNode[] concatConstruction (String simbol1, String simbol2) {
         DoubleNode[] vector = new DoubleNode[2];
         DoubleNode consSimbol1 = simpleConstruction(simbol1);
@@ -36,63 +42,43 @@ public class ThompsonConstructor {
         return vector;
     }
     
-    public static DoubleNode[] unionConstruction (String simbol1, String simbol2) {
-        DoubleNode[] vector = new DoubleNode[2];
+    public static void concatConstruction (String simbol1, String simbol2, DoubleNode start, DoubleNode end) {
+        DoubleNode consSimbol1 = new DoubleNode();
+        simpleConstruction(simbol1, start, consSimbol1); 
+        DoubleNode consSimbol2 = new DoubleNode();
+        consSimbol1.link1 = consSimbol2;
+        simpleConstruction(simbol2, consSimbol2, end);
+    }
+    
+    public static void unionConstruction (String simbol1, String simbol2, DoubleNode start, DoubleNode end) 
+    {
         DoubleNode consSimbol1 = simpleConstruction(simbol1);
         DoubleNode consSimbol2 = simpleConstruction(simbol2);
-        DoubleNode first = new DoubleNode();
+        start.link1 = consSimbol1;
+        start.transition1 = "";
+        start.link2 = consSimbol2;
+        start.transition2 = "";
         DoubleNode last = new DoubleNode();
-        first.link1 = consSimbol1;
-        first.link2 = consSimbol2;
         consSimbol1.link1.link1 = last;
         consSimbol2.link1.link1 = last;
-        vector[0] = first;
-        vector[1] = last;
-        return vector;
-    }
-    
-    public static DoubleNode[] unionConstruction (DoubleNode start, DoubleNode end, String simbol) {
-        DoubleNode[] vector = new DoubleNode[2];
-        DoubleNode consSimbol1 = start.link2;
-        DoubleNode consSimbol2 = simpleConstruction(simbol);
-        DoubleNode first = new DoubleNode();
-        start.link1 = first;
-        first.link1 = consSimbol1;
-        first.link2 = consSimbol2;
-        DoubleNode last = new DoubleNode();
         last.link1 = end;
-        consSimbol1.link1.link1 = last;
-        consSimbol2.link1.link1 = last;
-        vector[0] = first;
-        vector[1] = last;
-        return vector;
     }
     
-    public static DoubleNode[] asteriskConstruction (String simbol){
-        DoubleNode[] vector = new DoubleNode[2];
-        DoubleNode consSimbol1 = simpleConstruction(simbol);
-        consSimbol1.link1.link1 = consSimbol1;
-        DoubleNode start = new DoubleNode();
-        start.link1 = consSimbol1;
-        DoubleNode end = new DoubleNode();
+    public static void asteriskConstruction (String simbol, DoubleNode start, DoubleNode end){
+        DoubleNode consSimbol = simpleConstruction(simbol);
+        consSimbol.link1.link1 = consSimbol;
+        consSimbol.link1.link2 = end;
+        start.link1 = consSimbol;
+        start.transition1 = "";
         start.link2 = end;
-        consSimbol1.link1.link2 = end;
-        vector[0] = start;
-        vector[1] = end;
-        return vector;
+        start.transition2 = "";
     }
     
-    public static DoubleNode[] plusConstruction (String simbol){
-        DoubleNode[] vector = new DoubleNode[2];
-        DoubleNode consSimbol1 = simpleConstruction(simbol);
-        consSimbol1.link1.link1 = consSimbol1;
-        DoubleNode start = new DoubleNode();
-        start.link1 = consSimbol1;
-        DoubleNode end = new DoubleNode();
-        consSimbol1.link1.link2 = end;
-        vector[0] = start;
-        vector[1] = end;
-        return vector;
+    public static void plusConstruction (String simbol, DoubleNode start, DoubleNode end){
+        DoubleNode consSimbol = simpleConstruction(simbol);
+        consSimbol.link1.link1 = consSimbol;
+        consSimbol.link1.link2 = end;
+        start.link1 = consSimbol;
+        start.transition1 = "";
     }
-    
 }
