@@ -5,6 +5,8 @@
  */
 package practicateoriadelenguajes;
 
+import logic.SecuenceConstructor;
+
 /**
  *
  * @author luis_
@@ -152,12 +154,14 @@ public class Principal extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        SecuenceConstructor c = new SecuenceConstructor("(0|1.0*.1)*.0*"); // (0|1.0*.1)*.0* = (0+10*1)*0*
+        c.CreateThompson();
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
             }
-        });
+        });*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
