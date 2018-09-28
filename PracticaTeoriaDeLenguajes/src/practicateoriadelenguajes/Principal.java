@@ -5,8 +5,12 @@
  */
 package practicateoriadelenguajes;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import logic.AutomatonCreator;
 import logic.SecuenceConstructor;
 import model.DoubleNode;
 
@@ -158,17 +162,15 @@ public class Principal extends javax.swing.JFrame {
         //</editor-fold>
 
         SecuenceConstructor c = new SecuenceConstructor("(0|1.0*.1)*.0*"); // (0|1.0*.1)*.0* = (0+10*1)*0*
-        DoubleNode start = c.CreateThompson();
-        List<DoubleNode> visited = new LinkedList<DoubleNode>();
+        DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
         
-        if (SecuenceConstructor.isSimplifiable(start, null))
+        // Expande todas las transiciones
+        while (SecuenceConstructor.isExpandible(start, null))
         {
             SecuenceConstructor.expandTransitions(start, null);
         }
-            
         
-        int num = 1;
-        SecuenceConstructor.goOverAutomaton(start, visited, num);
+        AutomatonCreator.generateAFD(start);
         
         
         /* Create and display the form */

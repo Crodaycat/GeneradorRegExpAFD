@@ -13,7 +13,7 @@ public class DoubleNode {
     
     public DoubleNode link1; 
     public DoubleNode link2;
-    public String data;
+    public int data;
     public boolean uptakingState;
     public String transition1;
     public String transition2;
@@ -21,7 +21,7 @@ public class DoubleNode {
     public DoubleNode() {
         this.link1 = null;
         this.link2 = null;
-        this.data = "";
+        this.data = 0;
         this.uptakingState = false;
         this.transition1 = "";
         this.transition2 = "";

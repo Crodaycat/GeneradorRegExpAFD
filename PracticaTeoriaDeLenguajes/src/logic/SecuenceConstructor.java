@@ -53,6 +53,9 @@ public class SecuenceConstructor
                 divideSecWithStartingParenthesis(start, secuence, counter);
                 break;
             default:
+                String sec1 = aux;
+                aux = secuence.substring(1, 2);
+                executeDivision(aux, sec1, secuence, 2, start);
         }
         return start;
     }
@@ -76,49 +79,11 @@ public class SecuenceConstructor
         return counter;
     }
     
-    public static void goOverAutomaton (DoubleNode start, List<DoubleNode> visited, int num) {
-        if (!visited.contains(start))
-        {
-            visited.add(start);
-            start.data = String.valueOf(num);
-            if (start.link1 == null && start.link2 == null)
-            {
-                System.out.print("(end)");
-                return;
-            }
-            else
-            {
-                if (start.link1 != null)
-                {
-                    String transition = start.link1.data.equals("") ? String.valueOf(num + 1): start.link1.data;
-                    if (start.transition1.equals(""))
-                        System.out.print("(" + start.data + ") -λ> (" + transition + ")");
-                    else
-                        System.out.print("(" + start.data + ") " + "- " + start.transition1 + " > (" + transition + ")");
-                    num = start.link1.data.equals("") ? num+1: num;
-                    SecuenceConstructor.goOverAutomaton(start.link1, visited, num);
-                }
-                
-                if (start.link2 != null)
-                {
-                    String transition = start.link2.data.equals("") ? String.valueOf(num + 1): start.link2.data;
-                    if (start.transition2.equals(""))
-                        System.out.print("(" + start.data + ") -λ> (" + transition + ")");
-                    else
-                        System.out.print("(" + start.data + ") " + "- " + start.transition2 + " > (" + transition + ")");
-                    num = start.link2.data.equals("") ? num+1: num;
-                    SecuenceConstructor.goOverAutomaton(start.link2, visited, num);
-                }
-            }
-        }
-    }
-    
-    public static boolean isSimplifiable (DoubleNode start, List<DoubleNode> visited)
+    public static boolean isExpandible (DoubleNode start, List<DoubleNode> visited)
     {
         if (visited == null)
         {
             visited = new LinkedList<>();
-            System.out.println("Lista nula");
         }
         
         if (!visited.contains(start))
@@ -134,7 +99,7 @@ public class SecuenceConstructor
                 {
                     if (start.transition1.length() > 1)
                         return true;
-                    if (SecuenceConstructor.isSimplifiable(start.link1, visited))
+                    if (SecuenceConstructor.isExpandible(start.link1, visited))
                         return true;
                 }
                 
@@ -142,7 +107,7 @@ public class SecuenceConstructor
                 {
                     if (start.transition2.length() > 1)
                         return true;
-                    if (SecuenceConstructor.isSimplifiable(start.link2, visited))
+                    if (SecuenceConstructor.isExpandible(start.link2, visited))
                         return true;
                 }
             }
@@ -155,7 +120,6 @@ public class SecuenceConstructor
         if (visited == null)
         {
             visited = new LinkedList<>();
-            System.out.println("Lista nula");
         }
         
         if (!visited.contains(start))
@@ -175,7 +139,7 @@ public class SecuenceConstructor
                 if (start.link2 != null)
                 {
                     if (start.transition2.length() > 1)
-                        //expandTransition(start);
+                        expandTransition(start);
                     SecuenceConstructor.expandTransitions(start.link2, visited);
                 }
             }

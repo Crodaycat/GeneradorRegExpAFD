@@ -28,7 +28,6 @@ public class ThompsonConstructor {
     
     public static void simpleConstruction (String simbol, DoubleNode start, DoubleNode end) {
         start.link1 = end;
-        start.transition1 = "";
         start.transition1 = simbol;
     }
     
