@@ -16,9 +16,9 @@ import model.ThompsonConstructor;
  */
 public class SecuenceConstructor 
 {
-    String secuence;
-    String simbols;
-    String secSimbols;
+    public String secuence;
+    public String simbols;
+    public String secSimbols;
     
     public SecuenceConstructor (String sec)
     {
@@ -57,6 +57,12 @@ public class SecuenceConstructor
                 aux = secuence.substring(1, 2);
                 executeDivision(aux, sec1, secuence, 2, start);
         }
+        
+        while (SecuenceConstructor.isExpandible(start, null))
+        {
+            SecuenceConstructor.expandTransitions(start, null);
+        }
+        
         return start;
     }
     

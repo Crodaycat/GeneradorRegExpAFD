@@ -17,13 +17,11 @@ public class AFD
 {
     public List<Integer> acceptationStates;
     public HashMap<Integer, HashMap<String, Integer>> states;
-    private int errorState;
     
     public AFD ()
     {
         acceptationStates = new LinkedList<>();
         states = new HashMap<Integer, HashMap<String, Integer>>();
-        errorState = 0;
     }
     
     public void generateErrorState ()

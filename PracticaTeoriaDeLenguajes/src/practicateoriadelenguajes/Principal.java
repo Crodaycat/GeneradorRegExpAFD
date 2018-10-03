@@ -163,14 +163,9 @@ public class Principal extends javax.swing.JFrame {
 
         SecuenceConstructor c = new SecuenceConstructor("(0|1.0*.1)*.0*"); // (0|1.0*.1)*.0* = (0+10*1)*0*
         DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
-        
         // Expande todas las transiciones
-        while (SecuenceConstructor.isExpandible(start, null))
-        {
-            SecuenceConstructor.expandTransitions(start, null);
-        }
         
-        AutomatonCreator.generateAFD(start);
+        AutomatonCreator.generateAFD(start, c.secSimbols);
         
         
         /* Create and display the form */
