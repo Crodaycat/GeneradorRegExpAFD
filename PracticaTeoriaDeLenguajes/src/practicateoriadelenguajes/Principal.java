@@ -47,8 +47,10 @@ public class Principal extends javax.swing.JFrame {
         btnVisualizarAtómata = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lblEstadoHilera = new javax.swing.JLabel();
+        btnNachoAutomatea = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Robertómata");
 
         btnCrearAutomata.setText("Crear atómata");
         btnCrearAutomata.addActionListener(new java.awt.event.ActionListener() {
@@ -77,6 +79,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtExpresion);
 
         btnVisualizarAtómata.setText("Visualizar autómata finito generado");
+        btnVisualizarAtómata.setToolTipText("");
         btnVisualizarAtómata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVisualizarAtómataActionPerformed(evt);
@@ -86,6 +89,14 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setText("Estado de la hilera:");
 
         lblEstadoHilera.setText("En espera.");
+
+        btnNachoAutomatea.setText("Acerca de Robertómata");
+        btnNachoAutomatea.setActionCommand("");
+        btnNachoAutomatea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNachoAutomateaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,19 +113,20 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAnalizarHilera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAnalizarHilera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEstadoHilera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(lblEstadoHilera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNachoAutomatea)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,10 +142,16 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVisualizarAtómata, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblEstadoHilera))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnVisualizarAtómata, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblEstadoHilera))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNachoAutomatea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -145,12 +163,18 @@ public class Principal extends javax.swing.JFrame {
         if (!expression.equals(""))
         {
             SecuenceConstructor c = new SecuenceConstructor(expression); // (0|1.0*.1)*.0* = (0+10*1)*0*
-            DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
-
-            automaton = AutomatonCreator.generateAFD(start, c.secSimbols);
-            automaton.printAutomaton();
-            hasAExpression = true;
-            lblEstadoHilera.setText("En espera.");
+            try {
+                hasAExpression = false;
+                lblEstadoHilera.setText("En espera.");
+                DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
+                automaton = AutomatonCreator.generateAFD(start, c.secSimbols);
+                automaton.printAutomaton();
+                automaton.simplifyAutomaton();
+                hasAExpression = true;
+                JOptionPane.showMessageDialog(null, "El autómata ha sido generado con éxito.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
         } 
         else 
         {
@@ -179,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Ingresar primero una expresión para poder analizar la hilera.");
+            JOptionPane.showMessageDialog(null, "Genere primero un autómata para poder analizar la hilera.");
         }
     }//GEN-LAST:event_btnAnalizarHileraActionPerformed
 
@@ -191,6 +215,10 @@ public class Principal extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Debe generar un autómata primero para poder visualizarlo.");
     }//GEN-LAST:event_btnVisualizarAtómataActionPerformed
+
+    private void btnNachoAutomateaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNachoAutomateaActionPerformed
+        JOptionPane.showMessageDialog(null, "");
+    }//GEN-LAST:event_btnNachoAutomateaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,6 +261,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizarHilera;
     private javax.swing.JButton btnCrearAutomata;
+    private javax.swing.JButton btnNachoAutomatea;
     private javax.swing.JButton btnVisualizarAtómata;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

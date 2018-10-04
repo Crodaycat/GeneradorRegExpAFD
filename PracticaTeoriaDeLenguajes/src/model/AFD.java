@@ -7,6 +7,7 @@ package model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -30,7 +31,9 @@ public class AFD
     {
         int actualState = 0;
         String actualSymbol = toEvaluate.substring(0, 1);
-        if (!actualSymbol.equals("±") && !actualSymbol.equals("■"))
+        if (actualSymbol.equals("■"))
+            return false;
+        if (!actualSymbol.equals("±"))
             for (int i = 0; i < toEvaluate.length(); i++)
             {
                 actualSymbol = toEvaluate.substring(i, i+1);
@@ -58,5 +61,41 @@ public class AFD
             state.printTransitions();
         }
         System.out.println("<------------------------Automaton end------------------------>");
+    }
+    
+    public void simplifyAutomaton ()
+    {
+        for (int i = 0; i < states.size() - 1; i++)
+        {
+            LamdaState state = states.get(i);
+            for (int j = i+1; j < states.size(); j++)
+            {
+                LamdaState actState = states.get(j);
+                if (state.isUptakingState == actState.isUptakingState && state.transitions.equals(actState.transitions)) 
+                {
+                    removeEquivalentState(i, j);
+                    j = j-1;
+                }
+            }
+        }
+    }
+    
+    private void removeEquivalentState(int first, int equivalent)
+    {
+        System.out.println(first + " y " + equivalent + " son equivalentes.");
+        for (int i = 0; i < states.size(); i++)
+        {
+            if (i == equivalent)
+                continue;
+            LamdaState state = states.get(i);
+            for (Map.Entry<String, Integer> transition : state.transitions.entrySet())
+            {
+                if (transition.getValue() == equivalent)
+                    transition.setValue(first);
+                else if (transition.getValue() > equivalent)
+                    transition.setValue(transition.getValue() - 1);
+            }
+        }
+        states.remove(equivalent);
     }
 }

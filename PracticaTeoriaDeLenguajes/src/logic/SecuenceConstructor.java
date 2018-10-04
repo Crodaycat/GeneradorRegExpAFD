@@ -40,7 +40,7 @@ public class SecuenceConstructor
         }
     }
     
-    public DoubleNode CreateThompson()
+    public DoubleNode CreateThompson() throws Exception
     {
         DoubleNode start = ThompsonConstructor.nullConstruction();
         DoubleNode end = start.link1;
@@ -121,7 +121,7 @@ public class SecuenceConstructor
         return false;
     }
     
-    public static void expandTransitions (DoubleNode start, List<DoubleNode> visited)
+    public static void expandTransitions (DoubleNode start, List<DoubleNode> visited) throws Exception
     {
         if (visited == null)
         {
@@ -152,7 +152,8 @@ public class SecuenceConstructor
         }
     }
     
-    public static void expandTransition (DoubleNode start) {
+    public static void expandTransition (DoubleNode start) throws Exception
+    {
         String secuence = start.transition1;
         if (secuence.length() <= 1)
             return;
@@ -169,7 +170,7 @@ public class SecuenceConstructor
         }
     }
     
-    public static void divideSecWithStartingParenthesis (DoubleNode start, String secuence, int counter)
+    public static void divideSecWithStartingParenthesis (DoubleNode start, String secuence, int counter) throws Exception
     {
         int open = counter-1;
         counter = searchForParenthesisClose (counter, secuence); // Busca su respectivo cierre paréntesis y devuelve la posición.
@@ -187,7 +188,7 @@ public class SecuenceConstructor
         }  
     }
     
-    public static void executeDivision (String operator, String sec1, String secuence, int counter,DoubleNode start)
+    public static void executeDivision (String operator, String sec1, String secuence, int counter,DoubleNode start) throws Exception
     {
         if (operator.equals("+") || operator.equals("*"))
         {
@@ -209,7 +210,7 @@ public class SecuenceConstructor
         }
     }
     
-    public static void executeTimesOrPlusOperator (String operator, String secuence, DoubleNode start)
+    public static void executeTimesOrPlusOperator (String operator, String secuence, DoubleNode start) throws Exception
     {
         DoubleNode end = start.link1;
         if (operator.equals("*"))
@@ -217,10 +218,13 @@ public class SecuenceConstructor
         else if (operator.equals("+"))
             ThompsonConstructor.plusConstruction(secuence, start, end);
         else
+        {
             System.out.println("El operador ingresado no se reconoce: " + operator);
+            throw new Exception ("Se esperaba + ó * y llegó: " + operator);
+        }
     }
     
-    public static void executeConcatOrUnionOperator (String operator, String sec1, String sec2, DoubleNode start)
+    public static void executeConcatOrUnionOperator (String operator, String sec1, String sec2, DoubleNode start) throws Exception
     {
         DoubleNode end = start.link1;
         if (operator.equals("|"))
@@ -228,6 +232,9 @@ public class SecuenceConstructor
         else if (operator.equals("."))
             ThompsonConstructor.concatConstruction(sec1, sec2, start, end);
         else
+        {
             System.out.println("El operador ingresado no se reconoce: " + operator);
+            throw new Exception ("Se esperaba . ó | y llegó: " + operator);
+        }
     }
 }
