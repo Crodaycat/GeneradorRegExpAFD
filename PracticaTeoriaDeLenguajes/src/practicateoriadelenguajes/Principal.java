@@ -5,13 +5,10 @@
  */
 package practicateoriadelenguajes;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import javax.swing.JOptionPane;
 import logic.AutomatonCreator;
 import logic.SecuenceConstructor;
+import model.AFD;
 import model.DoubleNode;
 
 /**
@@ -19,11 +16,14 @@ import model.DoubleNode;
  * @author luis_
  */
 public class Principal extends javax.swing.JFrame {
-
+    
+    boolean hasAExpression;
+    AFD automaton;
     /**
      * Creates new form Principal
      */
     public Principal() {
+        hasAExpression = false;
         initComponents();
     }
 
@@ -66,16 +66,26 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setText("Ingrese la hilera a análizar:");
 
         btnAnalizarHilera.setText("Análizar hilera");
+        btnAnalizarHilera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalizarHileraActionPerformed(evt);
+            }
+        });
 
         txtExpresion.setColumns(20);
         txtExpresion.setRows(5);
         jScrollPane2.setViewportView(txtExpresion);
 
         btnVisualizarAtómata.setText("Visualizar autómata finito generado");
+        btnVisualizarAtómata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarAtómataActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Estado de la hilera:");
 
-        lblEstadoHilera.setText("En espera");
+        lblEstadoHilera.setText("En espera.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,8 +141,56 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearAutomataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAutomataActionPerformed
-        // TODO add your handling code here:
+        String expression = txtExpresion.getText();
+        if (!expression.equals(""))
+        {
+            SecuenceConstructor c = new SecuenceConstructor(expression); // (0|1.0*.1)*.0* = (0+10*1)*0*
+            DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
+
+            automaton = AutomatonCreator.generateAFD(start, c.secSimbols);
+            automaton.printAutomaton();
+            hasAExpression = true;
+            lblEstadoHilera.setText("En espera.");
+        } 
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "Ingrese una expresión válida.");
+        }
     }//GEN-LAST:event_btnCrearAutomataActionPerformed
+
+    private void btnAnalizarHileraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarHileraActionPerformed
+        if (hasAExpression)
+        {
+            String string = txtHilera.getText();
+            if (!string.equals(""))
+            {
+                boolean itMatches = automaton.evaluateString(string);
+                if (itMatches)
+                {
+                    lblEstadoHilera.setText("La hilera ha sido aceptada.");
+                }
+                else
+                {
+                    lblEstadoHilera.setText("La hilera ha sido rechazada.");
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Ingrese una hilera válida.");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ingresar primero una expresión para poder analizar la hilera.");
+        }
+    }//GEN-LAST:event_btnAnalizarHileraActionPerformed
+
+    private void btnVisualizarAtómataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarAtómataActionPerformed
+        if (automaton != null)
+        {
+            AFDView afdv = new AFDView(automaton);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Debe generar un autómata primero para poder visualizarlo.");
+    }//GEN-LAST:event_btnVisualizarAtómataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,19 +219,15 @@ public class Principal extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        SecuenceConstructor c = new SecuenceConstructor("(0|1.0*.1)*.0*"); // (0|1.0*.1)*.0* = (0+10*1)*0*
-        DoubleNode start = c.CreateThompson(); // Aplica el primer operador (.+|*)
-        // Expande todas las transiciones
         
-        AutomatonCreator.generateAFD(start, c.secSimbols);
         
         
         /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
             }
-        });*/
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

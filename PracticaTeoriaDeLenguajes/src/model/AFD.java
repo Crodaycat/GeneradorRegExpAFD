@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,22 +14,49 @@ import java.util.List;
  */
 public class AFD 
 {
-    public List<Integer> acceptationStates;
-    public HashMap<Integer, HashMap<String, Integer>> states;
+    public List<LamdaState> states;
+    public String symbols;
+    public String specialSymbols;
     
     public AFD ()
     {
-        acceptationStates = new LinkedList<>();
-        states = new HashMap<Integer, HashMap<String, Integer>>();
+        states = new LinkedList<>();
+        symbols = "";
+        specialSymbols = "±┤■";
     }
     
-    public void generateErrorState ()
+    public boolean evaluateString (String toEvaluate)        
+    //±┤■"; // ┤ es fin de secuencia. ± es secuencia vacía. ■ es la secuencia nula
     {
-        throw new UnsupportedOperationException();
+        int actualState = 0;
+        String actualSymbol = toEvaluate.substring(0, 1);
+        if (!actualSymbol.equals("±") && !actualSymbol.equals("■"))
+            for (int i = 0; i < toEvaluate.length(); i++)
+            {
+                actualSymbol = toEvaluate.substring(i, i+1);
+                if (actualSymbol.equals("┤") || (!symbols.contains(actualSymbol) && !specialSymbols.contains(actualSymbol)))
+                        break;
+                LamdaState state = states.get(actualState);
+                if (state.transitions.containsKey(actualSymbol))
+                {
+                    actualState = state.transitions.get(actualSymbol);
+                } 
+                else
+                    return false;
+            }
+        if (!symbols.contains(actualSymbol) && !specialSymbols.contains(actualSymbol))
+            return false;
+        return states.get(actualState).isUptakingState;
     }
     
-    public boolean evaluateString (String toEvaluate)
+    public void printAutomaton ()
     {
-        throw new UnsupportedOperationException();
+        System.out.println("<-----------------------Automaton start----------------------->");
+        for (LamdaState state : states)
+        {
+            System.out.println("State: " + states.indexOf(state) + " Uptaking: " + state.isUptakingState);
+            state.printTransitions();
+        }
+        System.out.println("<------------------------Automaton end------------------------>");
     }
 }

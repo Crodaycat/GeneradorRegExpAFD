@@ -6,11 +6,9 @@
 package logic;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import java.util.OptionalInt;
 import model.AFD;
 import model.DoubleNode;
@@ -38,9 +36,9 @@ public class AutomatonCreator {
         
         int uptakingNode = findUptakingNode(nodes);
         
-        createStates(uptakingNode, lamdaTransitions, transSymbols, nodes);
-        
         AFD afd = new AFD();
+        afd.symbols = transSymbols;
+        afd.states = createStates(uptakingNode, lamdaTransitions, transSymbols, nodes);
         
         return afd;
     }

@@ -121,6 +121,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="An&#xe1;lizar hilera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnalizarHileraActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -141,6 +144,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Visualizar aut&#xf3;mata finito generado"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarAt&#xf3;mataActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -149,7 +155,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblEstadoHilera">
       <Properties>
-        <Property name="text" type="java.lang.String" value="En espera"/>
+        <Property name="text" type="java.lang.String" value="En espera."/>
       </Properties>
     </Component>
   </SubComponents>
