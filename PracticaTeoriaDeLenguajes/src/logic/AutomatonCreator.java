@@ -146,11 +146,6 @@ public class AutomatonCreator {
         return uptakingNode;
     }
     
-    public static int insertState ()
-    {
-        return 0;
-    }
-    
     public static List<List<Integer>> getLamdaTransitions (List<DoubleNode> nodes)
     {
         List<List<Integer>> lamdaTransitions = new LinkedList<>();
@@ -205,7 +200,8 @@ public class AutomatonCreator {
         }
     }
     
-    public static int goOverSecuence (DoubleNode start, List<DoubleNode> visited, int num) {
+    public static int goOverSecuence (DoubleNode start, List<DoubleNode> visited, int num) 
+    {
         if (!visited.contains(start))
         {
             visited.add(start);

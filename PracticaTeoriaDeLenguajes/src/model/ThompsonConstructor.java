@@ -18,41 +18,32 @@ public class ThompsonConstructor {
         return first;
     }
     
-    public static DoubleNode simpleConstruction (String simbol) {
+    public static DoubleNode simpleConstruction (String symbol) {
         DoubleNode first = new DoubleNode();
         DoubleNode last = new DoubleNode();
         first.link1 = last;
-        first.transition1 = simbol;
+        first.transition1 = symbol;
         return first;
     }
     
-    public static void simpleConstruction (String simbol, DoubleNode start, DoubleNode end) {
+    public static void simpleConstruction (String symbol, DoubleNode start, DoubleNode end) {
         start.link1 = end;
-        start.transition1 = simbol;
+        start.transition1 = symbol;
     }
     
-    public static DoubleNode[] concatConstruction (String simbol1, String simbol2) {
-        DoubleNode[] vector = new DoubleNode[2];
-        DoubleNode consSimbol1 = simpleConstruction(simbol1);
-        DoubleNode consSimbol2 = simpleConstruction(simbol2);
-        consSimbol1.link1.link1 = consSimbol2;
-        vector[0] = consSimbol1;
-        vector[1] = consSimbol2.link1;
-        return vector;
-    }
-    
-    public static void concatConstruction (String simbol1, String simbol2, DoubleNode start, DoubleNode end) {
+    public static void concatConstruction (String symbol1, String symbol2, DoubleNode start, DoubleNode end) 
+    {
         DoubleNode consSimbol1 = new DoubleNode();
-        simpleConstruction(simbol1, start, consSimbol1); 
+        simpleConstruction(symbol1, start, consSimbol1); 
         DoubleNode consSimbol2 = new DoubleNode();
         consSimbol1.link1 = consSimbol2;
-        simpleConstruction(simbol2, consSimbol2, end);
+        simpleConstruction(symbol2, consSimbol2, end);
     }
     
-    public static void unionConstruction (String simbol1, String simbol2, DoubleNode start, DoubleNode end) 
+    public static void unionConstruction (String symbol1, String symbol2, DoubleNode start, DoubleNode end) 
     {
-        DoubleNode consSimbol1 = simpleConstruction(simbol1);
-        DoubleNode consSimbol2 = simpleConstruction(simbol2);
+        DoubleNode consSimbol1 = simpleConstruction(symbol1);
+        DoubleNode consSimbol2 = simpleConstruction(symbol2);
         start.link1 = consSimbol1;
         start.transition1 = "";
         start.link2 = consSimbol2;
@@ -63,7 +54,8 @@ public class ThompsonConstructor {
         last.link1 = end;
     }
     
-    public static void asteriskConstruction (String simbol, DoubleNode start, DoubleNode end){
+    public static void asteriskConstruction (String simbol, DoubleNode start, DoubleNode end)
+    {
         DoubleNode consSimbol = simpleConstruction(simbol);
         consSimbol.link1.link1 = consSimbol;
         consSimbol.link1.link2 = end;
@@ -73,7 +65,8 @@ public class ThompsonConstructor {
         start.transition2 = "";
     }
     
-    public static void plusConstruction (String simbol, DoubleNode start, DoubleNode end){
+    public static void plusConstruction (String simbol, DoubleNode start, DoubleNode end)
+    {
         DoubleNode consSimbol = simpleConstruction(simbol);
         consSimbol.link1.link1 = consSimbol;
         consSimbol.link1.link2 = end;
