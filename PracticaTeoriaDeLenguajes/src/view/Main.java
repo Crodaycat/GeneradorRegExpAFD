@@ -219,14 +219,16 @@ public class Main extends javax.swing.JFrame {
     private void btnNachoAutomateaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNachoAutomateaActionPerformed
         JOptionPane.showMessageDialog(null, 
             "Instrucciones de uso.\n\n"
-            + "1. Símbolos especiales: ┤ es fin de secuencia, se genera con ALT + 180. ± es secuencia vacía, se genera con ALT + 241. ■ es la secuencia nula, se genera con ALT + 254.\n"
-            + "2. Genere primero el autómata, para ello ingrese la expresión regular en el campo que está debajo del botón crear autómata.\n"
-            + "3. Para visualizar el autómata haga click en el botón que dice: Visualizar el autómata finito generado. Que se encuentra en la parte inferior izquierda.\n"
+            + "1. Símbolos especiales: ┤ es fin de secuencia, se genera con ALT + 180. ± es secuencia vacía, se genera con ALT + 241. ■ es la secuencia nula, se genera con ALT + 254.\n\n"
+            + "2. Genere primero el autómata, para ello ingrese la expresión regular en el campo que está debajo del botón crear autómata.\n\n"
+            + "3. Para visualizar el autómata haga click en el botón que dice: Visualizar el autómata finito generado. Que se encuentra en la parte inferior izquierda.\n\n"
             + "4. Para validar una secuencia escriba la secuencia en el campo que está debajo del botón Análizar hilera, haga click en el botón y debajo del cuadro de texto\n"
             + "se le informará el resultado. Los símbolos especiales están definidos en el númeral 1.\n\n"
+            + "5. Tenga en cuenta que la expresión (GO|GOTO|TOO|ON)*.ON.TOO debe escribirse de la siguiente manera: ((G.O)|(G.O.T.O)|(T.O.O)|(O.N))*.O.N.T.O.O y de manera análoga\n"
+            + "usar esta misma convención para otras expresiones.\n\n"
             + "El nombre de la aplicación es en honor al profesor: Roberto Flórez Rueda, que dicta la materia de Teoria de lenguajes en la UdeA.\n"
             + "Robertómata = Roberto + Autómata.\n\n"
-            + "Robetómata ha sido programado por los estudiantes: \n"
+            + "Robertómata ha sido programado por los estudiantes: \n"
             + "Andrés Mauricio Álvarez Ortiz.\n"
             + "Luis Alfonso Giraldo Murillo.\n\n"
             + "Ingeniería de sistemas - Universidad de Antioquia. Octubre de 2018.");
