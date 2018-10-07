@@ -66,12 +66,12 @@ public class SecuenceConstructor
         return start;
     }
     
-    public static int searchForParenthesisClose (int counter, String secuence)
+    public static int searchForParenthesisClose (int counter, String secuence) throws Exception
     {
         String aux = secuence.substring(counter,counter+1);
         counter++;
         int openP = 0;
-        while (!(openP == 0 && aux.equals(")")))
+        while (!(openP == 0 && aux.equals(")")) && counter < secuence.length())
         {
             if(aux.equals("("))
                 openP++;
@@ -82,6 +82,8 @@ public class SecuenceConstructor
             aux = secuence.substring(counter, counter+1);
             counter++;
         }
+        if (!aux.equals(")") || openP > 0)
+            throw new Exception("Falta un cierre paréntesis, verifique la expresión ingresada.");
         return counter;
     }
     
