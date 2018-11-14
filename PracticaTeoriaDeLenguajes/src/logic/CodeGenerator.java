@@ -15,7 +15,8 @@ import model.LamdaState;
 public class CodeGenerator {
     public static String generateCode (List<LamdaState> states, String inSymbols)
     {
-        String code = "   import java.util.Scanner; \n" +
+        String code = 
+            "   import java.util.Scanner; \n" +
             "   public class Template {  \n"  + 
             "       static int actualState = 0;  \n"  + 
             "       static String secuence;  \n"  + 
