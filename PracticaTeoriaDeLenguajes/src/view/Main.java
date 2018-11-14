@@ -7,6 +7,7 @@ package view;
 
 import javax.swing.JOptionPane;
 import logic.AutomatonCreator;
+import logic.CodeGenerator;
 import logic.GramaticUtils;
 import logic.SecuenceConstructor;
 import model.AFD;
@@ -174,7 +175,7 @@ public class Main extends javax.swing.JFrame {
                 hasAExpression = true;
                 JOptionPane.showMessageDialog(null, "El autómata ha sido generado con éxito.");
                 
-                GramaticUtils.automatonToGramatic(automaton).print();
+                System.out.println(CodeGenerator.generateCode(automaton.states, automaton.symbols));
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
