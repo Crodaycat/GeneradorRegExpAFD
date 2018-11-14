@@ -7,6 +7,7 @@ package view;
 
 import javax.swing.JOptionPane;
 import logic.AutomatonCreator;
+import logic.GramaticUtils;
 import logic.SecuenceConstructor;
 import model.AFD;
 import model.DoubleNode;
@@ -172,6 +173,9 @@ public class Main extends javax.swing.JFrame {
                 automaton.simplifyAutomaton();
                 hasAExpression = true;
                 JOptionPane.showMessageDialog(null, "El autómata ha sido generado con éxito.");
+                
+                GramaticUtils.automatonToGramatic(automaton).print();
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
