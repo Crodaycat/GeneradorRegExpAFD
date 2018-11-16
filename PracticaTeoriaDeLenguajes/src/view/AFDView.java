@@ -7,6 +7,7 @@ package view;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import logic.CodeGenerator;
 import model.AFD;
 import model.LamdaState;
 
@@ -17,6 +18,7 @@ import model.LamdaState;
 public class AFDView extends javax.swing.JFrame {
     
     AFD automaton;
+    String code = "";
     /**
      * Creates new form AFDView
      */
@@ -69,6 +71,7 @@ public class AFDView extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAutomaton = new javax.swing.JTable();
+        btnGenerateProgram = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,27 +88,47 @@ public class AFDView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblAutomaton);
 
+        btnGenerateProgram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnGenerateProgram.setText("Generar programa del autómata");
+        btnGenerateProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateProgramActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGenerateProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGenerateProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGenerateProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateProgramActionPerformed
+        this.code = CodeGenerator.generateCode(automaton.states, automaton.symbols);
+        Code codeView = new Code(code);
+    }//GEN-LAST:event_btnGenerateProgramActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGenerateProgram;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAutomaton;
     // End of variables declaration//GEN-END:variables

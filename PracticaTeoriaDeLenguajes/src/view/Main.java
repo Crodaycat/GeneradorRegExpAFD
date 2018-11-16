@@ -174,9 +174,6 @@ public class Main extends javax.swing.JFrame {
                 automaton.simplifyAutomaton();
                 hasAExpression = true;
                 JOptionPane.showMessageDialog(null, "El autómata ha sido generado con éxito.");
-                
-                System.out.println(CodeGenerator.generateCode(automaton.states, automaton.symbols));
-                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
@@ -231,6 +228,8 @@ public class Main extends javax.swing.JFrame {
             + "se le informará el resultado. Los símbolos especiales están definidos en el númeral 1.\n\n"
             + "5. Tenga en cuenta que la expresión (GO|GOTO|TOO|ON)*.ON.TOO debe escribirse de la siguiente manera: ((G.O)|(G.O.T.O)|(T.O.O)|(O.N))*.O.N.T.O.O y de manera análoga\n"
             + "usar esta misma convención para otras expresiones.\n\n"
+            + "6. Para exportar/visualizar el código, debe generar un autómata, hacer click en visualizar el autómata y en la parte superior a la derecha encontrará un botón para generar el código. \n"
+            + "Al hacer click abrirá una ventana con el código y un botón en la parte inferior para guardarlo.\n\n"
             + "El nombre de la aplicación es en honor al profesor: Roberto Flórez Rueda, que dicta la materia de Teoria de lenguajes en la UdeA.\n"
             + "Robertómata = Roberto + Autómata.\n\n"
             + "Robertómata ha sido programado por los estudiantes: \n"
