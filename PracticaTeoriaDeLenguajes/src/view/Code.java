@@ -94,10 +94,20 @@ public class Code extends javax.swing.JFrame {
             fcExport.setSelectedFile(new File("code.java"));
             fcExport.showSaveDialog(this);
             if (fcExport.getSelectedFile() != null) {
-                try (FileWriter savedFile = new FileWriter(fcExport.getSelectedFile())) {
+                String name = fcExport.getSelectedFile().getName();
+                if (name.length() > 4 && name.substring(name.length() - 5, name.length()).equalsIgnoreCase(".java"))
+                {
+                    try (FileWriter savedFile = new FileWriter(fcExport.getSelectedFile())) {
+                        savedFile.write(this.code);
+                        JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
+                    }
+                } else {
+                    try (FileWriter savedFile = new FileWriter(fcExport.getSelectedFile().getName() + ".java")) {
                     savedFile.write(this.code);
                     JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
                 }
+                }
+                
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
