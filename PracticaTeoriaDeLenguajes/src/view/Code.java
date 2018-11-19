@@ -94,7 +94,7 @@ public class Code extends javax.swing.JFrame {
             fcExport.setSelectedFile(new File("code.java"));
             fcExport.showSaveDialog(this);
             if (fcExport.getSelectedFile() != null) {
-                try (FileWriter savedFile = new FileWriter(fcExport.getSelectedFile() + ".java")) {
+                try (FileWriter savedFile = new FileWriter(fcExport.getSelectedFile())) {
                     savedFile.write(this.code);
                     JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
                 }
